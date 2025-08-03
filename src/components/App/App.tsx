@@ -1,7 +1,7 @@
 import styles from './App.module.css';
 import { useState } from 'react';
-import type Movie from '../../types/movie';
-import toast from 'react-hot-toast';
+import type { Movie } from '../../types/movie';
+import toast, { Toaster } from 'react-hot-toast';
 
 import fetchMovies from '../../services/movieService';
 import SearchBar from '../SearchBar/SearchBar';
@@ -14,7 +14,7 @@ export default function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
 
   async function handleSearch(query: string) {
     setMovies([]);
@@ -30,8 +30,7 @@ export default function App() {
     } catch (error) {
       toast.error('Failed to fetch movies.');
       console.error('Error fetching movies:', error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   }
@@ -39,9 +38,6 @@ export default function App() {
   function handleSelect(movie: Movie) {
     setSelectedMovie(movie);
     toast.success(`Selected movie: ${movie.title}`);
-    // Тут можна додати логіку для відображення деталей фільму
-    // Наприклад, відкриття модального вікна з інформацією про фільм
-    console.log('Selected movie:', movie);
   }
 
   function handleCloseModal() {
@@ -50,10 +46,13 @@ export default function App() {
 
   return (
     <div className={styles.app}>
+      <Toaster position="top-center" reverseOrder={false} />
       <SearchBar onSubmit={handleSearch} />
       {loading && <Loader />}
       {error && !loading && <ErrorMessage />}
-      {movies.length > 0 && <MovieGrid movies={movies} onSelect={handleSelect} />}
+      {movies.length > 0 && (
+        <MovieGrid movies={movies} onSelect={handleSelect} />
+      )}
       {selectedMovie && (
         <MovieModal movie={selectedMovie} onClose={handleCloseModal} />
       )}

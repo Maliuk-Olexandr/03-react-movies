@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { createPortal } from "react-dom";
-import type Movie from "../../types/movie";
-import styles from "./MovieModal.module.css";
+import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import type { Movie } from '../../types/movie';
+import styles from './MovieModal.module.css';
 
 interface MovieModalProps {
   movie: Movie;
@@ -64,4 +64,3 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
     document.body
   );
 }
-
