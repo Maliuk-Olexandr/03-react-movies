@@ -28,8 +28,10 @@ export default function App() {
       }
       setMovies(results);
     } catch (error) {
-      toast.error('Failed to fetch movies.');
+      setError(true);
       console.error('Error fetching movies:', error);
+      toast.error('Failed to fetch movies.');
+
     } finally {
       setLoading(false);
     }
